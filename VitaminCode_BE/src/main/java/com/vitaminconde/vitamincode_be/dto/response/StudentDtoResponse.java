@@ -1,15 +1,13 @@
-package com.vitaminconde.vitamincode_be.entity;
+package com.vitaminconde.vitamincode_be.dto.response;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Student {
+@Builder
+public class StudentDtoResponse {
     private Integer studentId;
     private String studentName;
     private String studentEmail;

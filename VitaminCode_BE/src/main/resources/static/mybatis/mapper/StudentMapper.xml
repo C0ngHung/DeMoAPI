@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vitaminconde.vitamincode_be.mapper.StudentMapper">
+
+    <!-- Kết nối các thuộc tính của lớp Student với các cột của bảng students -->
+    <resultMap id="StudentResultMap" type="com.vitaminconde.vitamincode_be.entity.Student">
+        <id column="student_id" property="studentId"></id>
+        <result column="student_name" property="studentName"></result>
+        <result column="student_email" property="studentEmail"></result>
+        <result column="class_id" property="classId"></result>
+    </resultMap>
+
+    <!-- Lấy tất cả sinh viên -->
+    <select id="getAllStudents" resultMap="StudentResultMap">
+        SELECT student_id,
+               student_name,
+               student_email,
+               class_id
+        FROM students
+    </select>
+
+    <!-- Lấy sinh viên theo ID -->
+    <select id="getStudentById" resultMap="StudentResultMap" parameterType="int">
+        SELECT student_id,
+               student_name,
+               student_email,
+               class_id
+        FROM students
+        WHERE student_id = #{id}
+    </select>
+
+    <!-- Chèn sinh viên mới -->
+    <insert id="addStudent" parameterType="com.vitaminconde.vitamincode_be.entity.Student">
+        INSERT INTO students (student_name,
+                              student_email,
+                              class_id)
+        VALUES (#{studentName},
+                #{studentEmail},
+                #{classId})
+        <selectKey keyProperty="studentId" resultType="int" order="AFTER">
+            SELECT last_insert_id()
+        </selectKey>
+    </insert>
+
+    <!-- Cập nhật thông tin sinh viên -->
+    <update id="updateStudent" parameterType="com.vitaminconde.vitamincode_be.entity.Student">
+        UPDATE students
+        SET student_email = #{studentEmail}
+        WHERE student_id =  #{studentId}
+    </update>
+
+    <!-- Xóa sinh viên theo ID -->
+    <delete id="deleteStudent" parameterType="int">
+        DELETE FROM students
+        WHERE student_id = #{id}
+    </delete>
+
+</mapper>
